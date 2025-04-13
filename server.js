@@ -1,45 +1,72 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
-const app = express()
+const app = express();
 const PORT = 3003;
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const flash = require('express-flash');
+const session = require('express-session');
 
-const users =[]
-app.set('view engine', 'ejs')
-app.use(express.urlencoded({extended: false}))
+const initializePassport = require('./password-config');
 
-app.get('/', (req, res)=>{
-    res.render('index.ejs', {name: 'Carolinda'})
+const users = []; // Dummy user storage
 
-})
+initializePassport(
+    passport, 
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+);
+
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: false }));
+app.use(flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// ROUTES
+app.get('/', (req, res) => {
+    res.render('index.ejs', { name: req.user?.name || 'Guest' });
+});
 
 app.get('/login', (req, res) => {
-    res.render('login.ejs',)
-})
-app.post('/login', (req, res) => {
-    // TODO: Implement login logic
-    res.send('Login route hit')
-})
+    res.render('login.ejs');
+});
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
+
 app.get('/register', (req, res) => {
-    res.render('register.ejs',)
-})
+    res.render('register.ejs');
+});
+
 app.post('/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         users.push({
             id: Date.now().toString(),
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword
-
-        })
-        res.redirect('/login')
+        });
+        res.redirect('/login');
     } catch (error) {
-        res.redirect('/register')
+        res.redirect('/register');
     }
-    // console.log(users)
-
-})
+    // console.log(users);
+});
 
 app.listen(PORT, () => {
-    console.log(`Express Server is listening on PORT:${PORT}`)
+    console.log(`Express Server is listening on PORT: ${PORT}`);
 });
