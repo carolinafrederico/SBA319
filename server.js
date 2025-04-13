@@ -15,8 +15,10 @@ app.get('/', (req, res)=>{
 app.get('/login', (req, res) => {
     res.render('login.ejs',)
 })
-app.post('/login', (req, res))
-
+app.post('/login', (req, res) => {
+    // TODO: Implement login logic
+    res.send('Login route hit')
+})
 app.get('/register', (req, res) => {
     res.render('register.ejs',)
 })
@@ -34,6 +36,7 @@ app.post('/register', async (req, res) => {
     } catch (error) {
         res.redirect('/register')
     }
+    // console.log(users)
 
 })
 
