@@ -11,11 +11,13 @@ if (process.env.NODE_ENV !== 'production') {
   const flash = require('express-flash');
   const session = require('express-session');
   const methodOverride = require('method-override');
-  
   const engine = require('ejs-mate');
-  app.engine('ejs', engine); // Enable ejs-mate for layouts
+  
+  // View Engine
+  app.engine('ejs', engine);
   app.set('view engine', 'ejs');
   
+  // Middleware
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(express.static('public'));
@@ -29,16 +31,16 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(passport.session());
   app.use(methodOverride('_method'));
   
-  // Make authentication status available in templates
+  // Global template variables
   app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated();
     res.locals.currentUser = req.user;
     next();
   });
   
-  // Load Passport config
+  // Passport Config
   const initializePassport = require('./password-config');
-  const { users } = require('./data/db'); // Shared data array for users
+  const { users } = require('./data/db');
   initializePassport(
     passport,
     email => users.find(user => user.email === email),
@@ -46,25 +48,29 @@ if (process.env.NODE_ENV !== 'production') {
   );
   
   // Middleware
-  const { checkAuthenticated, checkNotAuthenticated } = require('./middleware/auth');
+  const { checkAuthenticated } = require('./middleware/auth');
   
   // Routes
+  const userRoutes = require('./routes/users');
   const postRoutes = require('./routes/posts');
   const commentRoutes = require('./routes/comments');
-  app.use('/posts', postRoutes);
-  app.use('/comments', commentRoutes);
   
-  // ---------- Auth Routes ----------
+  app.use('/', userRoutes);          // Login, Register, Logout
+  app.use('/posts', postRoutes);     // Posts CRUD
+  app.use('/comments', commentRoutes); // Comments CRUD
+  
+  // Pages
   app.get('/', (req, res) => {
     res.redirect('/home');
   });
-
+  
   app.get('/dashboard', checkAuthenticated, (req, res) => {
-  res.render('index', {
-    title: 'Dashboard',
-    name: req.user?.name || 'User'
+    res.render('index', {
+      title: 'Dashboard',
+      name: req.user?.name || 'User'
+    });
   });
-});
+  
   app.get('/home', (req, res) => {
     const post = {
       title: 'Welcome!',
@@ -74,44 +80,7 @@ if (process.env.NODE_ENV !== 'production') {
     res.render('home', { title: 'Home Page', name, post });
   });
   
-  app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login', { title: 'Login Page' });
-  });
-  
-  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
-  
-  app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register', { title: 'Register Page' });
-  });
-  
-  app.post('/register', checkNotAuthenticated, async (req, res) => {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-      users.push({
-        id: Date.now().toString(),
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword
-      });
-      res.redirect('/login');
-    } catch (err) {
-      req.flash('error', 'Registration failed. Try again.');
-      res.redirect('/register');
-    }
-  });
-  
-  app.delete('/logout', (req, res, next) => {
-    req.logout(err => {
-      if (err) return next(err);
-      res.redirect('/login');
-    });
-  });
-  
-  // ---------- Error Handling ----------
+  // Error Handling
   app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong.');
