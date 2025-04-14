@@ -4,21 +4,18 @@ const { checkAuthenticated } = require('../middleware/auth');
 
 let comments = [];
 
-// GET /comments?postId=123
 router.get('/', (req, res) => {
   const { postId } = req.query;
   const filtered = postId ? comments.filter(c => c.postId === postId) : comments;
   res.json(filtered);
 });
 
-// GET /comments/:id
 router.get('/:id', (req, res) => {
   const comment = comments.find(c => c.id === req.params.id);
   if (!comment) return res.status(404).json({ error: 'Comment not found' });
   res.json(comment);
 });
 
-// POST /comments
 router.post('/', checkAuthenticated, (req, res) => {
   const { postId, text } = req.body;
   const newComment = {
@@ -31,7 +28,6 @@ router.post('/', checkAuthenticated, (req, res) => {
   res.status(201).json(newComment);
 });
 
-// PATCH /comments/:id
 router.patch('/:id', checkAuthenticated, (req, res) => {
   const comment = comments.find(c => c.id === req.params.id);
   if (!comment) return res.status(404).json({ error: 'Comment not found' });
@@ -41,7 +37,6 @@ router.patch('/:id', checkAuthenticated, (req, res) => {
   res.json(comment);
 });
 
-// DELETE /comments/:id
 router.delete('/:id', checkAuthenticated, (req, res) => {
   const index = comments.findIndex(c => c.id === req.params.id);
   if (index === -1) return res.status(404).json({ error: 'Comment not found' });
