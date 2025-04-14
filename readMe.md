@@ -12,7 +12,7 @@ This is a basic web application built with **Node.js** and **Express**, which im
 - **CRUD Routes**: For posts and comments.
 - **Method Override**: For supporting HTTP verbs like PUT and DELETE in HTML forms.
 
-## Table of Contents
+<!-- ## Table of Contents
 1. [Technologies Used](#technologies-used)
 2. [Setup](#setup)
 3. [Folder Structure](#folder-structure)
@@ -21,7 +21,7 @@ This is a basic web application built with **Node.js** and **Express**, which im
 6. [Middleware](#middleware)
 7. [Error Handling](#error-handling)
 8. [Contributing](#contributing)
-9. [License](#license)
+9. [License](#license) -->
 
 ## Technologies Used
 - **Node.js**: JavaScript runtime for building the server.
