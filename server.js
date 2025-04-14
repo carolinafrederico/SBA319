@@ -55,18 +55,16 @@ if (process.env.NODE_ENV !== 'production') {
   app.use('/comments', commentRoutes);
   
   // ---------- Auth Routes ----------
-  app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index', {
-      title: 'Dashboard',
-      name: req.user?.name || 'User'
-    });
+  app.get('/', (req, res) => {
+    res.redirect('/home');
   });
+
   app.get('/dashboard', checkAuthenticated, (req, res) => {
-    res.render('index', {
-      title: 'Dashboard',
-      name: req.user?.name || 'User'
-    });
+  res.render('index', {
+    title: 'Dashboard',
+    name: req.user?.name || 'User'
   });
+});
   app.get('/home', (req, res) => {
     const post = {
       title: 'Welcome!',
