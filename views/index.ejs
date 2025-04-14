@@ -1,4 +1,9 @@
-<h1>Welcome <%= name %></h1>
+<% layout('partials/layout') %>
+
+<h2>Welcome <%= name %></h2>
+
+<p>This is your dashboard. You are logged in.</p>
+
 <form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">LOG OUT</button>
+    <button type="submit">Log Out</button>
 </form>

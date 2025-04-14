@@ -4,12 +4,18 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const app = express();
+
 const PORT = 3003;
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override')
+
+const engine = require('ejs-mate');
+app.engine('ejs', engine); // use ejs-mate for layout support
+
+app.use(express.static('public'));
 
 const initializePassport = require('./password-config');
 
@@ -36,7 +42,8 @@ app.use(methodOverride('_method'))
 
 // ROUTES//
 app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user?.name || 'Guest' });
+    res.render("index", { title: "Login Page" });
+
 });
 app.get('/home', (req, res) => {
     const post = {
@@ -47,24 +54,34 @@ app.get('/home', (req, res) => {
     const name = req.user?.name || 'Guest';
     const isAuthenticated = req.isAuthenticated();
 
-    res.render('home.ejs', { post, name, isAuthenticated });
+    res.render("home", { 
+        title: "Home Page", 
+        name, 
+        post,
+        isAuthenticated
+    }); 
 });
 
-
-
 app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login.ejs');
+    res.render('login', { 
+        title: "Login Page", 
+        isAuthenticated: req.isAuthenticated() 
+    });
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/home',
     failureRedirect: '/login',
     failureFlash: true
 }));
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs');
+    res.render("register", { 
+        title: "Register Page", 
+        isAuthenticated: req.isAuthenticated() 
+    });
 });
+
 
 app.post('/register', checkNotAuthenticated, async (req, res) => {
     try {

@@ -1,14 +1,15 @@
-<h1><%= post.title %></h1>
+<% layout('partials/layout') %>
+
+<h2><%= post.title %></h2>
+
 <p><%= post.content %></p>
 
-<h2>Welcome <%= name %></h2>
+<h3>Welcome <%= name %></h3>
 
 <% if (isAuthenticated) { %>
     <form action="/logout?_method=DELETE" method="POST">
-        <button type="submit">LOG OUT</button>
+        <button type="submit">Log Out</button>
     </form>
 <% } else { %>
-    <a href="/login">Login</a> | <a href="/register">Register</a>
+    <p><a href="/login">Login</a> or <a href="/register">Register</a> to interact.</p>
 <% } %>
-
-
