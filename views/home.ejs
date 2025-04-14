@@ -1,10 +1,26 @@
 <% layout('partials/layout') %>
 
-<h2><%= post.title %></h2>
+<h2>Welcome to the Node.js Auth API Demo</h2>
 
-<p><%= post.content %></p>
+<p>This is a simple Node.js + Express application built to test authentication using Passport.js.</p>
 
-<h3>Welcome <%= name %></h3>
+<h3>👋 Hello, <%= name %>!</h3>
+
+<p>To test the login system:</p>
+<ul>
+    <li>Register a new account</li>
+    <li>Then Log In to access protected routes like the Dashboard</li>
+</ul>
+
+<h3>🔐 Current Features</h3>
+<ul>
+    <li>Register new users</li>
+    <li>Log in with email and password</li>
+    <li>Maintain session with Passport.js</li>
+    <li>Log out securely</li>
+</ul>
+
+<p>This is a minimal setup for demonstrating core authentication flows. More features to come!</p>
 
 <% if (isAuthenticated) { %>
     <form action="/logout?_method=DELETE" method="POST">
