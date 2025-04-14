@@ -33,10 +33,24 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride('_method'))
+
 // ROUTES//
 app.get('/', checkAuthenticated, (req, res) => {
     res.render('index.ejs', { name: req.user?.name || 'Guest' });
 });
+app.get('/home', (req, res) => {
+    const post = {
+        title: 'Welcome to My Node Auth App!',
+        content: 'This is a demo post showing off the authentication system using Express and Passport.js.'
+    };
+
+    const name = req.user?.name || 'Guest';
+    const isAuthenticated = req.isAuthenticated();
+
+    res.render('home.ejs', { post, name, isAuthenticated });
+});
+
+
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs');
@@ -63,8 +77,10 @@ app.post('/register', checkNotAuthenticated, async (req, res) => {
         });
         res.redirect('/login');
     } catch (error) {
+        req.flash('error', 'Registration failed. Try again.');
         res.redirect('/register');
     }
+    
     // console.log(users);
 });
 
@@ -75,7 +91,7 @@ app.delete('/logout', (req, res, next) => {
     });
   });
 
-//MIDDLEWARE FUNCTION//
+//AUTHENTICATE MIDDLEWARE FUNCTIONS//
 function checkAuthenticated (req, res, next) {
     if (req.isAuthenticated()){
         return next()
