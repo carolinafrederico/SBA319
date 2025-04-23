@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { checkAuthenticated } = require('../middleware/auth');
-
-let comments = [];
-
+// let comments = [];
+const {comments} = require('../data/db');
 router.get('/', (req, res) => {
   const { postId } = req.query;
   const filtered = postId ? comments.filter(c => c.postId === postId) : comments;

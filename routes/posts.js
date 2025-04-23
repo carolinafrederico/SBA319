@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { checkAuthenticated } = require('../middleware/auth');
-
-let posts = [];
-
+// let posts = [];
+const {posts} = require('../data/db');
 router.get('/', (req, res) => {
   const { userId } = req.query;
   const filtered = userId ? posts.filter(p => p.userId === userId) : posts;
