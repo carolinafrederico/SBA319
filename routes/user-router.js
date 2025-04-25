@@ -2,25 +2,21 @@ import express from 'express';
 import * as usersController from '../controllers/user-controller.js'
 const router = express.Router();
 
-////////////////////////////////////////////////////
-//All User routes (INDUCES) + corresponding (CRUD)//
-////////////////////////////////////////////////////
+// All User routes (CRUD) with corresponding methods
 
-// Index
+// Index route
+router.get('/', usersController.getUsers);
 
-router.get('/', usersController.getUsers)
-
-// Create
+// Create route
 router.post('/', usersController.createUser);
 
-// Show
+// Show route (get user by id)
 router.get('/:id', usersController.getUserById);
 
-// Update
+// Update route
 router.put('/:id', usersController.updateUser);
 
-// Delete
+// Delete route
 router.delete('/:id', usersController.deleteUser);
-
 
 export default router;

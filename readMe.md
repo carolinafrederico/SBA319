@@ -19,7 +19,8 @@ Welcome to the **Blog API Server**, a small but powerful Node.js and Express-bas
 ├── controllers/          # Business logic for each model (User, Post, Comment)
 ├── models/               # Mongoose schemas for each entity
 ├── routes/               # Express routes grouped by resource
-├── database/             # MongoDB connection setup
+├── db/                   # MongoDB connection setup
+├── public/               # Home page view
 ├── seedData.js           # Script to seed the database with sample data
 ├── server.js             # Entry point that configures Express and middleware
 ├── aboutMe.md            # You are here!
