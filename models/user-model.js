@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   dob: { type: Date, required: true },
   joined: { type: Date, default: Date.now },
-  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true },
-  comment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true }
+  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: false },
+  comment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: false }
 });
 
 const User = mongoose.model('User', userSchema);

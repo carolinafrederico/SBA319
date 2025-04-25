@@ -1,7 +1,7 @@
 import express from 'express';
-import mongoose from './db/database.js';
-import cors from 'cors'; // ASK BRYAN 
-import path from 'path'; // ASK BRYAN
+import connectDB from './db/database.js';
+import cors from 'cors'; // (Cross-Origin Resource Sharing) middleware --- CONFIRM WITH BRYAN 
+import path from 'path'; // used to import the built-in path module, which provides utilities for working with file and directory paths. --- ASK BRYAN
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
@@ -10,7 +10,7 @@ import postRoutes from './routes/post-router.js';
 import commentRoutes from './routes/comment-router.js';
 
 dotenv.config();
-
+connectDB ();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
