@@ -1,5 +1,5 @@
 
-# 📘 About Me: Blog API Server
+# 📘 Read Me: The Blog API Server
 
 Welcome to the **Blog API Server**, a small but powerful Node.js and Express-based application backed by MongoDB. This server is built as a foundation for a blogging platform where users can create accounts, write posts, and leave comments — all with structured and relational data using MongoDB’s document-based model.
 
