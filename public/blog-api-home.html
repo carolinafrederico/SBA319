@@ -8,56 +8,57 @@
 </head>
 <body>
 
-  <header>
-    <h1>Welcome to the Blog API Server</h1>
-    <p>A MongoDB Database Application</p>
-  </header>
+  <div class="container">
 
-  <section>
-    <h2>🚀 Overview</h2>
-    <p>This server provides full CRUD operations for <strong>Users</strong>, <strong>Posts</strong>, and <strong>Comments</strong>. It’s designed for developers to test, build, or integrate into blogging platforms or learning projects.</p>
-  </section>
-  <main class="flex-container">
+    <header role="banner">
+      <h1>Welcome to the Blog API Server</h1>
+      <p>A MongoDB Database Application</p>
+    </header>
 
-    <section>
-      <h2>📡 Available Routes</h2>
+    <main role="main" class="flex-container">
 
-      <h3>👤 Users</h3>
-      <ul>
-        <li><span class="route">GET /user</span> - Fetch all users</li>
-        <li><span class="route">GET /user/:id</span> - Get a specific user</li>
-        <li><span class="route">POST /user</span> - Create a new user</li>
-        <li><span class="route">PUT /user/:id</span> - Update a user</li>
-        <li><span class="route">DELETE /user/:id</span> - Delete a user</li>
-      </ul>
+      <section id="overview">
+        <h2>🚀 Overview</h2>
+        <p>This server provides full CRUD operations for <strong>Users</strong>, <strong>Posts</strong>, and <strong>Comments</strong>. It’s designed for developers to test, build, or integrate into blogging platforms or learning projects.</p>
+      </section>
 
-      <h3>📝 Posts</h3>
-      <ul>
-        <li><span class="route">GET /post</span> - List all posts</li>
-        <li><span class="route">GET /post/:id</span> - Get a single post</li>
-        <li><span class="route">POST /post</span> - Create a new post</li>
-        <li><span class="route">PUT /post/:id</span> - Update a post</li>
-        <li><span class="route">DELETE /post/:id</span> - Delete a post</li>
-      </ul>
+      <section id="routes">
+        <h2>📡 Available Routes</h2>
 
-      <h3>💬 Comments</h3>
-      <ul>
-        <li><span class="route">GET /comment</span> - List all comments</li>
-        <li><span class="route">GET /comment/:id</span> - Get a comment by ID</li>
-        <li><span class="route">POST /comment</span> - Add a new comment</li>
-        <li><span class="route">PUT /comment/:id</span> - Edit a comment</li>
-        <li><span class="route">DELETE /comment/:id</span> - Delete a comment</li>
-      </ul>
-    </section>
-  </main>
+        <h3>👤 Users</h3>
+        <ul>
+          <li><span class="route">GET /user</span> - Fetch all users</li>
+          <li><span class="route">GET /user/:id</span> - Get a specific user</li>
+          <li><span class="route">POST /user</span> - Create a new user</li>
+          <li><span class="route">PUT /user/:id</span> - Update a user</li>
+          <li><span class="route">DELETE /user/:id</span> - Delete a user</li>
+        </ul>
 
-    <!-- <section>
-      <h2>🧪 How to Use</h2>
-      <p>You can test the routes using <strong>Postman</strong> or <strong>curl</strong>. Example:</p>
-      <pre><code>POST http://localhost:3004/user</code></pre>
-      <p>Body (JSON):</p>
-      <pre><code>{
-  "Uid": 111,
+        <h3>📝 Posts</h3>
+        <ul>
+          <li><span class="route">GET /post</span> - List all posts</li>
+          <li><span class="route">GET /post/:id</span> - Get a single post</li>
+          <li><span class="route">POST /post</span> - Create a new post</li>
+          <li><span class="route">PUT /post/:id</span> - Update a post</li>
+          <li><span class="route">DELETE /post/:id</span> - Delete a post</li>
+        </ul>
+
+        <h3>💬 Comments</h3>
+        <ul>
+          <li><span class="route">GET /comment</span> - List all comments</li>
+          <li><span class="route">GET /comment/:id</span> - Get a comment by ID</li>
+          <li><span class="route">POST /comment</span> - Add a new comment</li>
+          <li><span class="route">PUT /comment/:id</span> - Edit a comment</li>
+          <li><span class="route">DELETE /comment/:id</span> - Delete a comment</li>
+        </ul>
+      </section>
+
+      <section id="how-to">
+        <h2>🧪 How to Use</h2>
+        <p>You can test the routes using <strong>Postman</strong> or <strong>curl</strong>. Example:</p>
+        <pre><code class="language-http">POST http://localhost:3004/user</code></pre>
+        <p>Body (JSON):</p>
+        <pre><code class="language-json">{
   "firstName": "Test",
   "lastName": "User",
   "email": "test@example.com",
@@ -66,19 +67,25 @@
   "post": "PostObjectIdHere",
   "comment": "CommentObjectIdHere"
 }</code></pre>
-      <p>Make sure to insert valid ObjectIds from existing posts and comments!</p>
-    </section> -->
-  <section>
-    <h2>📘 What I've learned</h2>
-    <ul>
-      <li>Use MongoDB Compass or Mongoose queries to browse data directly.</li>
-      <li>Make sure your MongoDB connection string is valid in <code>.env</code>.</li>
-      <li>Seed your database with <code>seedData.js</code> before testing.</li>
-    </ul>
-  </section>
-  <footer>
-    <p>© 2025 Blog API Server • Built with ❤️ and MongoDB, Express and Node.js</p>
-  </footer>
+        <p>Make sure to insert valid ObjectIds from existing posts and comments!</p>
+      </section>
+
+      <section id="learned">
+        <h2>📘 What I've Learned</h2>
+        <ul>
+          <li>Use MongoDB Compass or Mongoose queries to browse data directly.</li>
+          <li>Make sure your MongoDB connection string is valid in <code>.env</code>.</li>
+          <li>Seed your database with <code>seedData.js</code> before testing.</li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer role="contentinfo">
+      <p>© 2025 Blog API Server • Built with ❤️ and MongoDB, Express and Node.js</p>
+    </footer>
+
+  </div>
 
   <script type="module" src="main.js"></script>
 </body>
